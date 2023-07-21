@@ -1,0 +1,13 @@
+<!--?xml version=”1.0” encoding=”UTF-8”?-->
+
+<ItemCollection>
+    <Items>
+        <Item name="Water Wand">
+            <Description>Cast Water Spells!</Description>
+        </Item>
+        <Item name="Fire Wand">
+            <Description>Cast Fire Spells!</Description>
+        </Item>
+    </Items>
+
+</ItemCollection>

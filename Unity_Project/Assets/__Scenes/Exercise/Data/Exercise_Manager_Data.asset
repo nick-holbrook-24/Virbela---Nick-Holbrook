@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d60b5629506024a4684f449453507fe3, type: 3}
+  m_Name: Exercise_Manager_Data
+  m_EditorClassIdentifier: 
+  environmentPrefab: {fileID: 1348474756006416566, guid: 89c07dc1ea417e54a8e34dde288b836f, type: 3}
+  playerPrefab: {fileID: 6589052951636383412, guid: c01d04af7da0afd40b3e6f36f2f424b5, type: 3}
+  playerDefaultMaterial: {fileID: 2100000, guid: 108dfcd4dacdbbb41be3ee0e17fad6f6, type: 2}
+  playerDefaultColor: {r: 0.646976, g: 0, b: 1, a: 1}
+  playerMovementSpeed: 3
+  playerRotationSpeed: 5
+  playerRunSpeed: 13
+  playerCurrentRunStamina: 1000.00256
+  playerRunMaxStamina: 1000
+  playerRateOfStaminaLoss: 1
+  playerRateOfStaminaGain: 3
+  playerYRotationLimit: 87
+  itemPrefab: {fileID: 1901354277361619563, guid: b9785b27539fa044c99ac892287ddffa, type: 3}
+  initialItemCount: 5
+  itemBaseColor: {r: 1, g: 0.9362987, b: 0, a: 1}
+  itemHighlightColor: {r: 1, g: 0, b: 0, a: 1}
+  botPrefab: {fileID: 9157510989969070978, guid: 1ffa5839951e4244c858c0e06444e18d, type: 3}
+  initialBotCount: 5
+  botBaseColor: {r: 0, g: 1, b: 0.08734918, a: 1}
+  botHighlightColor: {r: 0, g: 0.15310931, b: 1, a: 1}
+  spawnRadiusAroundPlayer: 50
+  spawnCeilingFromPlayer: 5
+  numberOfObjectsToAddAtATime: 5
+  objectColorChanger: {fileID: 8508709137695302795, guid: 4ad657fc32977ca47b69964440088f7d, type: 3}
+  nearestObjectSystem: {fileID: 6586800295467640788, guid: 037f0cc2976544745a475774222077f5, type: 3}
+  searchRadius: 15
+  secondsBeforeNearestCheck: 0.5
+  saveLoadManager: {fileID: 8541117197711857047, guid: dd257b02ab93081439cf3281ae4430be, type: 3}
+  saveFileName: SavedItemBotData.json
+  unitTestSaveFileName: UnitTestSavedItemBotData.json
+  xmlReader: {fileID: 9021054927257034746, guid: 9fede6909ab39884bbb0055f6a5b5f54, type: 3}
+  itemXMLFileName: Items

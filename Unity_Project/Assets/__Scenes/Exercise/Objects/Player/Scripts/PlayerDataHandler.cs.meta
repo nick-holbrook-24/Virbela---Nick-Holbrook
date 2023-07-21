@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 5d23ceb4f726e8a4297f47aa8e70cf9b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - exerciseManagerData: {fileID: 11400000, guid: bc9b6925ceb7bf948855106e05334258, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
