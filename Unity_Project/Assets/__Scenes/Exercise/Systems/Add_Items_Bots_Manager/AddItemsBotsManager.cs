@@ -89,7 +89,7 @@ namespace ExerciseOne
                 SpawnObjectAroundPlayer(newItem);
                 newItem.transform.name = "Item #" + itemPool.GetAllActiveObjects().Count;
                 newItem.transform.SetParent(itemPoolParent);
-                saveLoadManager.RegisterObjectDataHandler(newItem);
+                saveLoadManager?.RegisterObjectDataHandler(newItem);
                 ReapplyItemsNames();
                 exerciseManagerData.itemCount++;
             }
@@ -103,7 +103,7 @@ namespace ExerciseOne
                 SpawnObjectAroundPlayer(newBot);
                 newBot.transform.name = "Bot #" + botPool.GetAllActiveObjects().Count;
                 newBot.transform.SetParent(botPoolParent);
-                saveLoadManager.RegisterObjectDataHandler(newBot);
+                saveLoadManager?.RegisterObjectDataHandler(newBot);
                 ReapplyBotsNames();
                 exerciseManagerData.botCount++;
             }
