@@ -20,12 +20,6 @@ namespace ExerciseOne
             CreateInstances(_initialSize);
         }
 
-        private T CreateNewInstance()
-        {
-            T instance = Object.Instantiate(prefab, parent);
-            return instance;
-        }
-
         public T GetObject()
         {
             T instance;
@@ -41,11 +35,11 @@ namespace ExerciseOne
 
             instance.gameObject.SetActive(true);
             activeObjects.Add(instance);
-
+            
             return instance;
         }
 
-        public void Return(T _instance)
+        public void ReturnObject(T _instance)
         {
             _instance.gameObject.SetActive(false);
             pool.Enqueue(_instance);
@@ -57,8 +51,7 @@ namespace ExerciseOne
             for (int i = 0; i < _numberOfAdditionalObjects; i++)
             {
                 T instance = CreateNewInstance();
-                instance.gameObject.name = prefab.name + " #" + i;
-                instance.gameObject.SetActive(false);
+
                 pool.Enqueue(instance);
             }
         }
@@ -66,6 +59,19 @@ namespace ExerciseOne
         public List<T> GetAllActiveObjects()
         {
             return activeObjects;
+        }
+
+        public T GetARandomActiveObject()
+        {
+            return activeObjects[Random.Range(0, activeObjects.Count)];
+        }
+
+        private T CreateNewInstance()
+        {
+            T instance = Object.Instantiate(prefab, parent);
+            instance.gameObject.name = prefab.name + " #" + pool.Count;
+            instance.gameObject.SetActive(false);
+            return instance;
         }
     }
 }

@@ -8,6 +8,8 @@ namespace ExerciseOne
 
         private Renderer botRenderer = null;
 
+        private const string botType = "Bot";
+
         private void Awake()
         {
             botRenderer = transform.GetComponent<Renderer>();
@@ -37,7 +39,7 @@ namespace ExerciseOne
         {
             ObjectData objectData = new ObjectData
             {
-                objectType = "Bot",
+                objectType = botType,
                 objectName = transform.name,
                 position = new SerializableVector3(transform.position),
                 baseColor = new SerializableColor(exerciseManagerData.botBaseColor),
@@ -54,6 +56,16 @@ namespace ExerciseOne
 
             exerciseManagerData.botBaseColor = _objectData.baseColor.ToColor();
             exerciseManagerData.botHighlightColor = _objectData.highlightColor.ToColor();
+        }
+
+        public string GetObjectType()
+        {
+            return botType;
+        }
+
+        public string GetObjectName()
+        {
+            return transform.name;
         }
     }
 }

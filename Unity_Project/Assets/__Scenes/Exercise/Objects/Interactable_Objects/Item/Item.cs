@@ -8,6 +8,8 @@ namespace ExerciseOne
 
         private Renderer itemRenderer = null;
 
+        private const string itemType = "Item";
+
         private void Awake()
         {
             itemRenderer = transform.GetComponent<Renderer>();
@@ -37,7 +39,7 @@ namespace ExerciseOne
         {
             ObjectData objectData = new ObjectData
             {
-                objectType = "Item",
+                objectType = itemType,
                 objectName = transform.name,
                 position = new SerializableVector3(transform.position),
                 baseColor = new SerializableColor(exerciseManagerData.itemBaseColor),
@@ -54,6 +56,16 @@ namespace ExerciseOne
 
             exerciseManagerData.itemBaseColor = _objectData.baseColor.ToColor();
             exerciseManagerData.itemHighlightColor = _objectData.highlightColor.ToColor();
+        }
+
+        public string GetObjectType()
+        {
+            return itemType;
+        }
+
+        public string GetObjectName()
+        {
+            return transform.name;
         }
     }
 }

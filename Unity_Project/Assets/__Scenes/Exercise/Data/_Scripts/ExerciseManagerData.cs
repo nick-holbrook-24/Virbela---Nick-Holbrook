@@ -24,16 +24,23 @@ namespace ExerciseOne
 
         [Header("Interactable Objects")]
         public Item itemPrefab;
-        public int initialItemCount = 10;
+        public int itemCount = 5;
         public Color itemBaseColor = Color.white;
         public Color itemHighlightColor = Color.red;
         public Bot botPrefab;
-        public int initialBotCount = 10;
+        public int botCount = 5;
         public Color botBaseColor = Color.white;
         public Color botHighlightColor = Color.blue;
         public float spawnRadiusAroundPlayer = 10.0f;
         public float spawnCeilingFromPlayer = 3.0f;
         public int numberOfObjectsToAddAtATime = 5;
+        public int numberOfObjectsToRemoveAtATime = 3;
+
+        [Header("Add Item Bots Manager")]
+        public AddItemsBotsManager addItemsBotsManager = null;
+        
+        [Header("Remove Item Bots Manager")]
+        public RemoveItemsBotsManager removeItemsBotsManager = null;
 
         [Header("Object Color Changer")]
         public ObjectColorChanger objectColorChanger = null;

@@ -8,28 +8,30 @@ namespace ExerciseOne
         [SerializeField] private ExerciseManagerData exerciseManagerData = null;
 
         private Player player = null;
-        private ObjectPool<Item> itemPool = null;
-        private ObjectPool<Bot> botPool = null;
+        private AddItemsBotsManager addItemsBotsManager = null;
+        private RemoveItemsBotsManager removeItemsBotsManager = null;
         private ObjectColorChanger objectColorChanger = null;
         private INearestObjectSystem nearestObjectSystem = null;
         private SaveLoadManager saveLoadManager = null;
         private XMLReader xmlReader = null;
+        private bool hasInitialized = false;
 
         private void OnEnable()
         {
-            SpawnEnvironment();
-            SpawnPlayer();
-            SpawnItems();
-            SpawnBots();
-            SpawnNearestObjectSystem();
-            SpawnObjectColorChanger();
-            InitiateLoadManager();
-            ReadInXMLItemText();
-        }
+            if (hasInitialized == false)
+            {
+                InitializeEnvironment();
+                InitializePlayer();
+                InitializeAddInteractableObjects();
+                InitializeRemoveInteractableObjects();
+                InitializeNearestObjectSystem();
+                InitializeObjectColorChanger();
+                InitializeXMLItemText();
+                InitializeSaveLoadManager();
+            }
 
-        private void Update()
-        {
-            CheckInputForAdditionalItemsBots();
+            hasInitialized = true;
+            LoadData();
         }
 
         private void OnDisable()
@@ -37,38 +39,36 @@ namespace ExerciseOne
             SaveData();
         }
 
-        private void SpawnEnvironment()
+        private void InitializeEnvironment()
         {
             Instantiate(exerciseManagerData.environmentPrefab, transform);
         }
 
-        private void SpawnPlayer()
+        private void InitializePlayer()
         {
             player = Instantiate(exerciseManagerData.playerPrefab.gameObject, transform).GetComponent<Player>();
         }
 
-        private void SpawnItems()
+        private void InitializeAddInteractableObjects()
         {
-            itemPool = new ObjectPool<Item>(exerciseManagerData.itemPrefab,
-                exerciseManagerData.initialItemCount, transform);
-            SpawnObjectsAroundPlayer(itemPool, exerciseManagerData.initialItemCount);
+            addItemsBotsManager = Instantiate(exerciseManagerData.addItemsBotsManager.gameObject, transform)
+                .GetComponent<AddItemsBotsManager>();
         }
 
-        private void SpawnBots()
+        private void InitializeRemoveInteractableObjects()
         {
-            botPool = new ObjectPool<Bot>(exerciseManagerData.botPrefab,
-                exerciseManagerData.initialBotCount, transform);
-            SpawnObjectsAroundPlayer(botPool, exerciseManagerData.initialBotCount);
+            removeItemsBotsManager = Instantiate(exerciseManagerData.removeItemsBotsManager.gameObject, transform)
+                .GetComponent<RemoveItemsBotsManager>();
         }
 
-        private void SpawnNearestObjectSystem()
+        private void InitializeNearestObjectSystem()
         {
             nearestObjectSystem =
                 Instantiate(exerciseManagerData.nearestObjectSystem, transform)
                 .GetComponent<INearestObjectSystem>();
         }
 
-        private void SpawnObjectColorChanger()
+        private void InitializeObjectColorChanger()
         {
             objectColorChanger = Instantiate(exerciseManagerData.objectColorChanger.gameObject, transform)
                 .GetComponent<ObjectColorChanger>();
@@ -76,15 +76,9 @@ namespace ExerciseOne
                 exerciseManagerData.secondsBeforeNearestCheck);
         }
 
-        private void InitiateLoadManager()
+        private void InitializeXMLItemText()
         {
-            saveLoadManager = Instantiate(exerciseManagerData.saveLoadManager.gameObject, transform).GetComponent<SaveLoadManager>();
-            saveLoadManager.Load(exerciseManagerData.saveFileName);
-        }
-
-        private void ReadInXMLItemText()
-        {
-            xmlReader = Instantiate(exerciseManagerData.xmlReader).GetComponent<XMLReader>();
+            xmlReader = Instantiate(exerciseManagerData.xmlReader, transform).GetComponent<XMLReader>();
             List<List<string>> itemStringLists =
                 xmlReader.GetXMLTextLists(exerciseManagerData.itemXMLFileName);
             for (int i = 0; i < itemStringLists.Count; i++)
@@ -96,51 +90,24 @@ namespace ExerciseOne
             }
         }
 
-        private void CheckInputForAdditionalItemsBots()
+        private void InitializeSaveLoadManager()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                ExpandItems(exerciseManagerData.numberOfObjectsToAddAtATime);
-                ExpandBots(exerciseManagerData.numberOfObjectsToAddAtATime);
-            }
+            saveLoadManager = Instantiate(exerciseManagerData.saveLoadManager.gameObject, transform).GetComponent<SaveLoadManager>();
+            
+            addItemsBotsManager.Initialize(saveLoadManager);
+            removeItemsBotsManager.Initialize(saveLoadManager, addItemsBotsManager.GetItemPool(),
+                addItemsBotsManager.GetBotPool(), addItemsBotsManager.GetItemPoolParent(), 
+                addItemsBotsManager.GetBotPoolParent());
+        }
+
+        private void LoadData()
+        {
+            saveLoadManager.Load(exerciseManagerData.saveFileName);
         }
 
         private void SaveData()
         {
             saveLoadManager?.Save(exerciseManagerData.saveFileName);
-        }
-
-        private void ExpandItems(int _numberToAdd)
-        {
-            itemPool.CreateInstances(_numberToAdd);
-            SpawnObjectsAroundPlayer(itemPool, _numberToAdd);
-        }
-
-        private void ExpandBots(int _numberToAdd)
-        {
-            botPool.CreateInstances(_numberToAdd);
-            SpawnObjectsAroundPlayer(botPool, _numberToAdd);
-        }
-
-        private void SpawnObjectsAroundPlayer<T>(ObjectPool<T> _objectPool, int _count) 
-            where T : MonoBehaviour, IInteractableObject
-        {
-            for (int i = 0; i < _count; i++)
-            {
-                T obj = _objectPool.GetObject();
-                obj.transform.position = GetRandomPositionAroundPlayer();
-                obj.gameObject.SetActive(true);
-            }
-        }
-
-        private Vector3 GetRandomPositionAroundPlayer()
-        {
-            Vector2 randomCirclePoint = 
-                Random.insideUnitCircle * exerciseManagerData.spawnRadiusAroundPlayer;
-            Vector3 randomPosition = new Vector3(randomCirclePoint.x, 
-                Random.Range(0.0f, exerciseManagerData.spawnCeilingFromPlayer), randomCirclePoint.y);
-
-            return player.transform.position + randomPosition;
         }
     }
 }

@@ -7,9 +7,9 @@ namespace ExerciseOne
     public class ObjectColorChanger : MonoBehaviour
     {
         private IInteractableObject previousNearest = null;
-        public INearestObjectSystem nearestObjectSystem = null;
-        public Transform playerTransform = null;
-        public float secondsToWaitForNearestCheck = 1.0f;
+        private INearestObjectSystem nearestObjectSystem = null;
+        private Transform playerTransform = null;
+        private float secondsToWaitForNearestCheck = 1.0f;
 
         private CancellationTokenSource cancellationTokenSource = null;
 

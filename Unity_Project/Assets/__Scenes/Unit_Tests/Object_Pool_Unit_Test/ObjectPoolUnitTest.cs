@@ -18,15 +18,15 @@ namespace ExerciseOne
         private void SpawnItems()
         {
             itemPool = new ObjectPool<Item>(exerciseManagerData.itemPrefab,
-                exerciseManagerData.initialItemCount, transform);
-            SpawnObjectsAroundPlayer(itemPool, exerciseManagerData.initialItemCount);
+                exerciseManagerData.itemCount, transform);
+            SpawnObjectsAroundPlayer(itemPool, exerciseManagerData.itemCount);
         }
 
         private void SpawnBots()
         {
             botPool = new ObjectPool<Bot>(exerciseManagerData.botPrefab,
-                exerciseManagerData.initialBotCount, transform);
-            SpawnObjectsAroundPlayer(botPool, exerciseManagerData.initialBotCount);
+                exerciseManagerData.botCount, transform);
+            SpawnObjectsAroundPlayer(botPool, exerciseManagerData.botCount);
         }
 
         private void SpawnObjectsAroundPlayer<T>(ObjectPool<T> _objectPool, int _count)
